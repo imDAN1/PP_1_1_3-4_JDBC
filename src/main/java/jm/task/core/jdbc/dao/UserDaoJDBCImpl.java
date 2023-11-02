@@ -7,11 +7,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBCImpl extends Util implements UserDao {
+//import static jm.task.core.jdbc.util.Util.getConnection;
+
+public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
 
     }
-    Connection connection = getConnection();
+    Connection connection = Util.getConnection(); // или добавить import static jm.task.core.jdbc.util.Util.getConnection;
+//    и обращаться без Util.
 
     public void createUsersTable() {
         String sql = "CREATE TABLE users (`id` BIGINT NOT NULL AUTO_INCREMENT,`Name` VARCHAR(45) NOT NULL," +

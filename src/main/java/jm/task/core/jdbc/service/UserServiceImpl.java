@@ -8,9 +8,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserServiceImpl extends Util implements UserService {
+public class UserServiceImpl implements UserService {
     UserDaoJDBCImpl u1 = new UserDaoJDBCImpl();
-    Connection connection = getConnection();
     public void createUsersTable() {
         u1.createUsersTable();
     }

@@ -9,7 +9,7 @@ public class Util {
     private static final String PASSWORD = "root";
     private static final String URL = "jdbc:mysql://localhost:3306/PPUsers";
     // реализуйте настройку соеденения с БД
-    public Connection getConnection() {
+    public static Connection getConnection() {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -19,7 +19,7 @@ public class Util {
         return connection;
     }
 
-    public void closeConnection() {
+    public static void closeConnection() {
         Connection connection = getConnection();
         try {
             connection.close();
