@@ -5,9 +5,9 @@ import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
 public class Main {
+    private final static UserService UserService = new UserServiceImpl();
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        UserService UserService = new UserServiceImpl();
         UserService.createUsersTable();
         UserService.saveUser("Dima", "Nozdrin", (byte) 23);
         UserService.saveUser("Katya", "Nozdrina", (byte) 16);

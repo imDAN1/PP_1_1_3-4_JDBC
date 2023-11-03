@@ -11,23 +11,24 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
 
     }
-    Connection connection = Util.getConnection(); // или добавить import static jm.task.core.jdbc.util.Util.getConnection;
-//    и обращаться без Util.
+    private final Connection connection = Util.getConnection();
 
     public void createUsersTable() {
-        String sql = "CREATE TABLE users (`id` BIGINT NOT NULL AUTO_INCREMENT,`Name` VARCHAR(45) NOT NULL," +
+        String sql = "CREATE TABLE IF NOT EXISTS users (`id` BIGINT NOT NULL AUTO_INCREMENT,`Name` VARCHAR(45) NOT NULL," +
                 " `LastName` VARCHAR(45) NOT NULL, `Age` TINYINT NOT NULL,  PRIMARY KEY (`id`));";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.executeUpdate();
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void dropUsersTable() {
-        String sql = "DROP TABLE users";
+        String sql = "DROP TABLE IF EXISTS users";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.executeUpdate();
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -63,11 +64,15 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                User user = new User();
+                User user = new User(resultSet.getString("Name"), resultSet.getString("LastName"),
+                        resultSet.getByte("Age"));
+                user.setId(resultSet.getLong("id"));
+                /*
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("Name"));
                 user.setLastName(resultSet.getString("LastName"));
                 user.setAge(resultSet.getByte("Age"));
+                 */
                 allUsers.add(user);
             }
         } catch (SQLException e) {
