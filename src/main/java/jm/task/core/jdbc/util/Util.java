@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class Util {
+public final class Util {
 //     Настройка JDBC для первой части задачи
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
@@ -73,5 +73,10 @@ public class Util {
 
         configuration.setProperties(settings);
         return configuration;
+    }
+
+    public static void closeSessionFactory() {
+        SessionFactory sessionFactory = getSessionFactory();
+        sessionFactory.close();
     }
 }
