@@ -2,21 +2,13 @@ package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table (name = "users")
 public class User {
-    @Id
-    @Column (name = "id")
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "Name")
     private String name;
 
-    @Column (name = "LastName")
     private String lastName;
 
-    @Column (name = "Age")
     private Byte age;
 
     public User() {
